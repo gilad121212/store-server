@@ -38,7 +38,7 @@ exports.getAllProducts = getAllProducts;
 const getCategory = (categoryID) => __awaiter(void 0, void 0, void 0, function* () {
     try {
         const products = yield (0, productsDal_1.getCategoryFromDB)(categoryID);
-        if (!products)
+        if (!products[0])
             throw new Error("no collection in the database");
         return products;
     }

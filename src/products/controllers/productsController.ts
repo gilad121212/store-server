@@ -2,11 +2,9 @@ import { Request, Response } from 'express';
 import { getAllCategories, getAllProducts , getCategory} from '../services/products';
 
 
-
-
   export const getAllCategoryController = async (req: Request, res: Response) => {
     try {
-        const categories = getAllCategories();
+        const categories = await getAllCategories();
         return res.json(categories);
     } catch (error) {
         return res.send(error)
@@ -16,10 +14,6 @@ import { getAllCategories, getAllProducts , getCategory} from '../services/produ
   export const getAllProductsController = async (req: Request, res: Response) => {
     try {
         const products = await getAllProducts();
-        console.log('controller')
-        console.log(products[0])
-
-
         return res.send(products);
     } catch (error) {
         return res.send(error)
@@ -30,7 +24,6 @@ import { getAllCategories, getAllProducts , getCategory} from '../services/produ
     const id = req.params.id
     try {
         const products = await getCategory(id);
-        console.log('controller')
         return res.send(products);
     } catch (error) {
         return res.send(error)
