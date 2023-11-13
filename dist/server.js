@@ -13,7 +13,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 const express_1 = __importDefault(require("express"));
-const router_1 = __importDefault(require("./products/products/router"));
+const router_1 = __importDefault(require("./products/routes/router"));
 const router_2 = require("./users/routes/router");
 const mongoDB_1 = require("./configuration/mongoDB");
 const app = (0, express_1.default)();
