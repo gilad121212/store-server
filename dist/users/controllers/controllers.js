@@ -9,15 +9,27 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
     });
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.signUp = void 0;
+exports.logIn = exports.signUp = void 0;
 const apiServices_1 = require("../services/apiServices");
 const signUp = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     try {
-        const a = yield (0, apiServices_1.newUser)();
-        res.send(a);
+        const user = req.body;
+        const result = yield (0, apiServices_1.register)(user);
+        res.status(200).send(result);
     }
-    catch (_a) {
-        throw new Error;
+    catch (err) {
+        res.status(500).send(err.message);
     }
 });
 exports.signUp = signUp;
+const logIn = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    try {
+        const user = req.body;
+        const token = yield (0, apiServices_1.getToken)(user);
+        res.status(200).send(token);
+    }
+    catch (err) {
+        res.status(500).send(err.message);
+    }
+});
+exports.logIn = logIn;
