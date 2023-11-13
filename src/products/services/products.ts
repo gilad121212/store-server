@@ -23,8 +23,8 @@ export const getAllCategories = async () => {
 
   export const getCategory = async (categoryID:string) => {
     try {
-      const products = await getCategoryFromDB(categoryID);      
-      if (!products) throw new Error("no collection in the database");
+      const products = await getCategoryFromDB(categoryID);  
+      if (!products[0]) throw new Error("no collection in the database");
       return products;
     } catch (error) {
       return Promise.reject(error);

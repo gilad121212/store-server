@@ -13,7 +13,7 @@ exports.getCategoryByIdController = exports.getAllProductsController = exports.g
 const products_1 = require("../services/products");
 const getAllCategoryController = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     try {
-        const categories = (0, products_1.getAllCategories)();
+        const categories = yield (0, products_1.getAllCategories)();
         return res.json(categories);
     }
     catch (error) {
@@ -24,8 +24,6 @@ exports.getAllCategoryController = getAllCategoryController;
 const getAllProductsController = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     try {
         const products = yield (0, products_1.getAllProducts)();
-        console.log('controller');
-        console.log(products[0]);
         return res.send(products);
     }
     catch (error) {
@@ -37,7 +35,6 @@ const getCategoryByIdController = (req, res) => __awaiter(void 0, void 0, void 0
     const id = req.params.id;
     try {
         const products = yield (0, products_1.getCategory)(id);
-        console.log('controller');
         return res.send(products);
     }
     catch (error) {

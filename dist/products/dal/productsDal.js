@@ -12,11 +12,10 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.getCategoryFromDB = exports.getCollectionFromDB = void 0;
 const mongoDB_1 = require("../../configuration/mongoDB");
 const myDB = mongoDB_1.client.db("store");
-const myCollection = myDB.collection("products");
 const getCollectionFromDB = (collection) => __awaiter(void 0, void 0, void 0, function* () {
+    const myCollection = myDB.collection(collection);
     try {
         const documents = yield myCollection.find({}).toArray();
-        console.log('con to db');
         return documents;
     }
     catch (err) {
@@ -25,6 +24,7 @@ const getCollectionFromDB = (collection) => __awaiter(void 0, void 0, void 0, fu
 });
 exports.getCollectionFromDB = getCollectionFromDB;
 const getCategoryFromDB = (categoryID) => __awaiter(void 0, void 0, void 0, function* () {
+    const myCollection = myDB.collection("products");
     try {
         const documents = yield myCollection.find({ 'category.id': Number(categoryID) }).toArray();
         console.log(documents);
