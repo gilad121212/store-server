@@ -21,7 +21,7 @@ const register = (user) => __awaiter(void 0, void 0, void 0, function* () {
         const users = yield (0, dal_1.getUserByEmail)(user.email);
         if (!users) {
             const res = yield (0, dal_1.addUser)(user);
-            return res;
+            return user;
         }
         else {
             return Promise.reject(new Error("user is Already exists"));

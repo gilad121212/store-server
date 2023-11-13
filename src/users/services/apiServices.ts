@@ -10,7 +10,7 @@ export const register = async (user: User) => {
         const users = await getUserByEmail(user.email);
         if (!users) {
             const res = await addUser(user)
-            return res
+            return user
         }
         else {
             return Promise.reject(new Error("user is Already exists"))

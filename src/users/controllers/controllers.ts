@@ -11,7 +11,8 @@ export const signUp = async (req: Request, res: Response) =>{
     try{
         const user = req.body as User;
         const result = await register(user)
-        res.status(200).send(result)
+        const token = await getToken(result)
+        res.status(200).send(token)
     }
     catch(err: any){
         res.status(500).send(err.message)
