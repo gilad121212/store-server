@@ -9,7 +9,7 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
     });
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.getProductByIdController = exports.getCategoryByIdController = exports.getAllProductsController = exports.getAllCategoryController = void 0;
+exports.getProductByCategory = exports.getProductByIdController = exports.getCategoryByIdController = exports.getAllProductsController = exports.getAllCategoryController = void 0;
 const products_1 = require("../services/products");
 const getAllCategoryController = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     try {
@@ -53,3 +53,14 @@ const getProductByIdController = (req, res) => __awaiter(void 0, void 0, void 0,
     }
 });
 exports.getProductByIdController = getProductByIdController;
+const getProductByCategory = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    const { category } = req.params;
+    try {
+        const products = yield (0, products_1.getByCategory)(category);
+        res.status(200).json({ data: products });
+    }
+    catch (error) {
+        res.status(500).json({ error: error.message });
+    }
+});
+exports.getProductByCategory = getProductByCategory;

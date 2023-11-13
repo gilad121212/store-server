@@ -10,4 +10,5 @@ productsRouter.get('/', productsController_1.getAllCategoryController);
 productsRouter.get('/all', productsController_1.getAllProductsController);
 productsRouter.get('/all/:id', productsController_1.getCategoryByIdController);
 productsRouter.get('/product/:id', productsController_1.getProductByIdController);
+productsRouter.get('/products/:category', productsController_1.getProductByCategory);
 exports.default = productsRouter;
