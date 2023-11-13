@@ -8,19 +8,16 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
         step((generator = generator.apply(thisArg, _arguments || [])).next());
     });
 };
-var __importDefault = (this && this.__importDefault) || function (mod) {
-    return (mod && mod.__esModule) ? mod : { "default": mod };
-};
 Object.defineProperty(exports, "__esModule", { value: true });
-const express_1 = __importDefault(require("express"));
-const mongoDB_1 = require("./configuration/mongoDB");
-const cors_1 = require("./cors/cors");
-const router_1 = __importDefault(require("./router.ts/router"));
-const app = (0, express_1.default)();
-app.use(cors_1.corsOrigin);
-app.use(express_1.default.json());
-app.use(router_1.default);
-app.listen(3000, () => __awaiter(void 0, void 0, void 0, function* () {
-    yield mongoDB_1.client.connect();
-    console.log(`Server is up and running`);
-}));
+exports.signUp = void 0;
+const apiServices_1 = require("../services/apiServices");
+const signUp = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    try {
+        const a = yield (0, apiServices_1.newUser)();
+        res.send(a);
+    }
+    catch (_a) {
+        throw new Error;
+    }
+});
+exports.signUp = signUp;
