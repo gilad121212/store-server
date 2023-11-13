@@ -1,5 +1,5 @@
 import express from 'express';
-import productsRouter from './products/products/router';
+import productsRouter from './products/routes/router';
 import { usersRouter } from './users/routes/router';
 import { client } from './configuration/mongoDB';
 
