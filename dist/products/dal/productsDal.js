@@ -9,7 +9,7 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
     });
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.getCategoryFromDB = exports.getCollectionFromDB = void 0;
+exports.getProductFromDB = exports.getCategoryFromDB = exports.getCollectionFromDB = void 0;
 const mongoDB_1 = require("../../configuration/mongoDB");
 const myDB = mongoDB_1.client.db("store");
 const getCollectionFromDB = (collection) => __awaiter(void 0, void 0, void 0, function* () {
@@ -27,7 +27,6 @@ const getCategoryFromDB = (categoryID) => __awaiter(void 0, void 0, void 0, func
     const myCollection = myDB.collection("products");
     try {
         const documents = yield myCollection.find({ 'category.id': Number(categoryID) }).toArray();
-        console.log(documents);
         return documents;
     }
     catch (err) {
@@ -35,3 +34,16 @@ const getCategoryFromDB = (categoryID) => __awaiter(void 0, void 0, void 0, func
     }
 });
 exports.getCategoryFromDB = getCategoryFromDB;
+const getProductFromDB = (productID) => __awaiter(void 0, void 0, void 0, function* () {
+    const myCollection = myDB.collection("products");
+    try {
+        const document = yield myCollection.findOne({ 'id': Number(productID) });
+        if (document)
+            yield myCollection.updateOne({ 'id': Number(productID) }, { $inc: { Views: 1 } });
+        return document;
+    }
+    catch (err) {
+        console.error("Failed to retrieve documents:", err);
+    }
+});
+exports.getProductFromDB = getProductFromDB;
