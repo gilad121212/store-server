@@ -7,9 +7,9 @@ const app = express();
 
 // app.use(cors());
 app.use(express.json());
-
+app.use(express.json());
 app.use('/products',productsRouter)
-app.use("/users",usersRouter)
+app.use('/users',usersRouter)
 
 app.listen(3000, async () => {
   await client.connect();
