@@ -13,10 +13,14 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 const express_1 = __importDefault(require("express"));
+const router_1 = __importDefault(require("./products/products/router"));
+const router_2 = require("./users/routes/router");
 const mongoDB_1 = require("./configuration/mongoDB");
 const app = (0, express_1.default)();
 // app.use(cors());
 app.use(express_1.default.json());
+app.use('/products', router_1.default);
+app.use("/users", router_2.usersRouter);
 app.listen(3000, () => __awaiter(void 0, void 0, void 0, function* () {
     yield mongoDB_1.client.connect();
     console.log(`Server is up and running`);
