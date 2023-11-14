@@ -64,6 +64,7 @@ const getTopFiveFromDB = (type) => __awaiter(void 0, void 0, void 0, function* (
     }
     catch (err) {
         console.error("Failed to retrieve documents:", err);
+        throw new Error("Failed to connect to the database");
     }
 });
 exports.getTopFiveFromDB = getTopFiveFromDB;

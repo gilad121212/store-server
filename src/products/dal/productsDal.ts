@@ -46,17 +46,16 @@ export const getProductFromDB = async (productID: string) => {
 };
 
 export const getTopFiveFromDB = async (type: string) => {
-    const myCollection = myDB.collection(type);
-    try {
-        const topFiveProducts = await myCollection
-        .find()
-        .sort({ Views: -1 }) 
-        .limit(5) 
-        .toArray();
-      return topFiveProducts;
-    } catch (err) {
-      console.error("Failed to retrieve documents:", err);
-    }
-  };
-  
-  
+  const myCollection = myDB.collection(type);
+  try {
+    const topFiveProducts = await myCollection
+      .find()
+      .sort({ Views: -1 })
+      .limit(5)
+      .toArray();
+    return topFiveProducts;
+  } catch (err) {
+    console.error("Failed to retrieve documents:", err);
+    throw new Error("Failed to connect to the database");
+  }
+};
