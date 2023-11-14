@@ -9,11 +9,7 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
     });
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-<<<<<<< HEAD
 exports.getTopFive = exports.getProductById = exports.getCategory = exports.getAllProducts = exports.getAllCategories = void 0;
-=======
-exports.getProductById = exports.getByCategory = exports.getCategory = exports.getAllProducts = exports.getAllCategories = void 0;
->>>>>>> master
 const productsDal_1 = require("../dal/productsDal");
 const getAllCategories = () => __awaiter(void 0, void 0, void 0, function* () {
     try {
@@ -41,7 +37,7 @@ const getAllProducts = () => __awaiter(void 0, void 0, void 0, function* () {
 exports.getAllProducts = getAllProducts;
 const getCategory = (categoryID) => __awaiter(void 0, void 0, void 0, function* () {
     try {
-        const products = yield (0, productsDal_1.getByCategoryFromDB)(categoryID);
+        const products = yield (0, productsDal_1.getCategoryFromDB)(categoryID);
         if (!products || products.length === 0) {
             throw new Error("No such category in the database");
         }
@@ -52,18 +48,15 @@ const getCategory = (categoryID) => __awaiter(void 0, void 0, void 0, function* 
     }
 });
 exports.getCategory = getCategory;
-const getByCategory = (category) => __awaiter(void 0, void 0, void 0, function* () {
-    try {
-        const product = yield (0, productsDal_1.getByCategoryFromDB)(category);
-        if (!product)
-            throw new Error("no such product in the database");
-        return product;
-    }
-    catch (error) {
-        return Promise.reject(error);
-    }
-});
-exports.getByCategory = getByCategory;
+// export const getByCategory = async (category: string) => {
+//   try {
+//     const product = await getByCategoryFromDB(category);
+//     if (!product) throw new Error("no such product in the database");
+//     return product;
+//   } catch (error) {
+//     return Promise.reject(error);
+//   }
+// }
 const getProductById = (id) => __awaiter(void 0, void 0, void 0, function* () {
     try {
         const product = yield (0, productsDal_1.getProductFromDB)(id);

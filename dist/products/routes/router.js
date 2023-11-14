@@ -6,17 +6,9 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const express_1 = __importDefault(require("express"));
 const productsController_1 = require("../controllers/productsController");
 const productsRouter = express_1.default.Router();
-<<<<<<< HEAD
 productsRouter.get("/", productsController_1.getAllCategoryController);
 productsRouter.get("/all", productsController_1.getAllProductsController);
 productsRouter.get("/all/:id", productsController_1.getCategoryByIdController);
 productsRouter.get("/product/:id", productsController_1.getProductByIdController);
 productsRouter.get("/top5/:type", productsController_1.getTopFiveController);
-=======
-productsRouter.get('/', productsController_1.getAllCategoryController);
-productsRouter.get('/all', productsController_1.getAllProductsController);
-productsRouter.get('/all/:id', productsController_1.getCategoryByIdController);
-productsRouter.get('/product/:id', productsController_1.getProductByIdController);
-productsRouter.get('/products/:category', productsController_1.getProductByCategory);
->>>>>>> master
 exports.default = productsRouter;
