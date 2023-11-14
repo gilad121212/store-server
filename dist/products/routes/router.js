@@ -9,5 +9,5 @@ const productsRouter = express_1.default.Router();
 productsRouter.get('/', productsController_1.getAllCategoryController);
 productsRouter.get('/all', productsController_1.getAllProductsController);
 productsRouter.get('/all/:id', productsController_1.getCategoryByIdController);
-// productsRouter.get('/:id', getCategoryByIdController);
+productsRouter.get('/product/:id', productsController_1.getProductByIdController);
 exports.default = productsRouter;
