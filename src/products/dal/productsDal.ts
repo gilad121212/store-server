@@ -47,10 +47,14 @@ export const editShopingCart = async (products: Products, user_id: string) => {
 };
 
 export const getShopingCart = async (user_id: string) => {
+  const myCollection = myDB.collection("products");
   try {
     const CollectionShopingCart = myDB.collection("shopingCart");
-    const productsArr = await CollectionShopingCart.findOne({ user_id: user_id });
-    return productsArr
+    const productsArr = await CollectionShopingCart.findOne({ user_id: user_id })
+    const productsIdList = productsArr?.products.map((id: { product_id: string }) => id.product_id)
+    const products = await myCollection.find({ id: { $in: productsIdList } }).toArray()
+    console.log(products);
+    return products
   } catch (err) {
     throw err
   }

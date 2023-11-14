@@ -52,10 +52,14 @@ const editShopingCart = (products, user_id) => __awaiter(void 0, void 0, void 0,
 });
 exports.editShopingCart = editShopingCart;
 const getShopingCart = (user_id) => __awaiter(void 0, void 0, void 0, function* () {
+    const myCollection = myDB.collection("products");
     try {
         const CollectionShopingCart = myDB.collection("shopingCart");
         const productsArr = yield CollectionShopingCart.findOne({ user_id: user_id });
-        return productsArr;
+        const productsIdList = productsArr === null || productsArr === void 0 ? void 0 : productsArr.products.map((id) => id.product_id);
+        const products = yield myCollection.find({ id: { $in: productsIdList } }).toArray();
+        console.log(products);
+        return products;
     }
     catch (err) {
         throw err;
