@@ -9,7 +9,11 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
     });
 };
 Object.defineProperty(exports, "__esModule", { value: true });
+<<<<<<< HEAD
+exports.getTopFiveController = exports.getProductByIdController = exports.getCategoryByIdController = exports.getAllProductsController = exports.getAllCategoryController = void 0;
+=======
 exports.getProductByCategory = exports.getProductByIdController = exports.getCategoryByIdController = exports.getAllProductsController = exports.getAllCategoryController = void 0;
+>>>>>>> master
 const products_1 = require("../services/products");
 const getAllCategoryController = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     try {
@@ -53,14 +57,26 @@ const getProductByIdController = (req, res) => __awaiter(void 0, void 0, void 0,
     }
 });
 exports.getProductByIdController = getProductByIdController;
+<<<<<<< HEAD
+const getTopFiveController = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    const type = req.params.type;
+    try {
+        const topElements = yield (0, products_1.getTopFive)(type);
+        res.status(200).json({ data: topElements });
+=======
 const getProductByCategory = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     const { category } = req.params;
     try {
         const products = yield (0, products_1.getByCategory)(category);
         res.status(200).json({ data: products });
+>>>>>>> master
     }
     catch (error) {
         res.status(500).json({ error: error.message });
     }
 });
+<<<<<<< HEAD
+exports.getTopFiveController = getTopFiveController;
+=======
 exports.getProductByCategory = getProductByCategory;
+>>>>>>> master

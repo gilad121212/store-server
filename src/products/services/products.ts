@@ -1,10 +1,4 @@
-import {
-  getCollectionFromDB,
-  getByCategoryFromDB,
-  getProductFromDB
-
-} from "../dal/productsDal";
-import productsRouter from "../routes/router";
+import { getCollectionFromDB, getCategoryFromDB, getProductFromDB , getTopFiveFromDB } from "../dal/productsDal";
 
 
 export const getAllCategories = async () => {
@@ -29,7 +23,7 @@ export const getAllProducts = async () => {
 
 export const getCategory = async (categoryID: string) => {
   try {
-    const products = await getByCategoryFromDB(categoryID);
+    const products = await getCategoryFromDB(categoryID);
     if (!products || products.length === 0) {
       throw new Error("No such category in the database");
     }
@@ -38,23 +32,33 @@ export const getCategory = async (categoryID: string) => {
     return Promise.reject(error);
   }
 };
-export const getByCategory = async (category: string) => {
-  try {
-    const product = await getByCategoryFromDB(category);
-    if (!product) throw new Error("no such product in the database");
-    return product;
-  } catch (error) {
-    return Promise.reject(error);
-  }
-}
+// export const getByCategory = async (category: string) => {
+//   try {
+//     const product = await getByCategoryFromDB(category);
+//     if (!product) throw new Error("no such product in the database");
+//     return product;
+//   } catch (error) {
+//     return Promise.reject(error);
+//   }
+// }
 
-export const getProductById = async (id: string) => {
+
+  export const getProductById = async (id: string) => {
+    try {
+      const product = await getProductFromDB(id);
+      if (!product) throw new Error("no such product in the database");
+      return product;
+    } catch (error) {
+      return Promise.reject(error);
+    }
+  };
+  
+
+export const getTopFive = async (type: string) => {
   try {
-    const product = await getProductFromDB(id);
-    if (!product) throw new Error("no such product in the database");
-    return product;
+    const topElements = await getTopFiveFromDB(type);
+    return topElements;
   } catch (error) {
     return Promise.reject(error);
   }
 };
-

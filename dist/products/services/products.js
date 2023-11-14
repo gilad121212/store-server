@@ -9,7 +9,11 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
     });
 };
 Object.defineProperty(exports, "__esModule", { value: true });
+<<<<<<< HEAD
+exports.getTopFive = exports.getProductById = exports.getCategory = exports.getAllProducts = exports.getAllCategories = void 0;
+=======
 exports.getProductById = exports.getByCategory = exports.getCategory = exports.getAllProducts = exports.getAllCategories = void 0;
+>>>>>>> master
 const productsDal_1 = require("../dal/productsDal");
 const getAllCategories = () => __awaiter(void 0, void 0, void 0, function* () {
     try {
@@ -72,3 +76,13 @@ const getProductById = (id) => __awaiter(void 0, void 0, void 0, function* () {
     }
 });
 exports.getProductById = getProductById;
+const getTopFive = (type) => __awaiter(void 0, void 0, void 0, function* () {
+    try {
+        const topElements = yield (0, productsDal_1.getTopFiveFromDB)(type);
+        return topElements;
+    }
+    catch (error) {
+        return Promise.reject(error);
+    }
+});
+exports.getTopFive = getTopFive;
