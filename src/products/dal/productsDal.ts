@@ -2,6 +2,8 @@ import { client } from "../../configuration/mongoDB";
 
 const myDB = client.db("store");
 
+export type Products = { product_id: number, quantity: number }[]
+
 export const getCollectionFromDB = async (collection: string) => {
   const myCollection = myDB.collection(collection);
   try {
@@ -30,18 +32,27 @@ export const getCategoryFromDB = async (categoryID: string) => {
   }
 };
 
-export const isProductExists = async (product: string, user_id: string) => {
+export const editShopingCart = async (products: Products, user_id: string) => {
   try {
     const CollectionShopingCart = myDB.collection("shopingCart");
-    console.log();
-    
-    const cart = await CollectionShopingCart.findOne({ user_id: user_id})
-    console.log(cart);
-    const arrProducts = cart?.products.find((obj: { product_id: string; }) => obj.product_id === product)
-    console.log(arrProducts);
-    return "arrProducts"
+    await CollectionShopingCart.updateOne(
+      { user_id: user_id },
+      { $set: { products: products } }
+    );
+    const productsArr = await CollectionShopingCart.findOne({}).then(a => a?.products)
+    return productsArr
   } catch (err) {
-    console.error("Failed to retrieve documents:", err);
+    throw err
+  }
+};
+
+export const getShopingCart = async (user_id: string) => {
+  try {
+    const CollectionShopingCart = myDB.collection("shopingCart");
+    const productsArr = await CollectionShopingCart.findOne({ user_id: user_id });
+    return productsArr
+  } catch (err) {
+    throw err
   }
 };
 

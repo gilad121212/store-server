@@ -9,7 +9,7 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
     });
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.getTopFiveFromDB = exports.getProductFromDB = exports.isProductExists = exports.getCategoryFromDB = exports.getCollectionFromDB = void 0;
+exports.getTopFiveFromDB = exports.getProductFromDB = exports.getShopingCart = exports.editShopingCart = exports.getCategoryFromDB = exports.getCollectionFromDB = void 0;
 const mongoDB_1 = require("../../configuration/mongoDB");
 const myDB = mongoDB_1.client.db("store");
 const getCollectionFromDB = (collection) => __awaiter(void 0, void 0, void 0, function* () {
@@ -39,21 +39,29 @@ const getCategoryFromDB = (categoryID) => __awaiter(void 0, void 0, void 0, func
     }
 });
 exports.getCategoryFromDB = getCategoryFromDB;
-const isProductExists = (product, user_id) => __awaiter(void 0, void 0, void 0, function* () {
+const editShopingCart = (products, user_id) => __awaiter(void 0, void 0, void 0, function* () {
     try {
         const CollectionShopingCart = myDB.collection("shopingCart");
-        console.log();
-        const cart = yield CollectionShopingCart.findOne({ user_id: user_id });
-        console.log(cart);
-        const arrProducts = cart === null || cart === void 0 ? void 0 : cart.products.find((obj) => obj.product_id === product);
-        console.log(arrProducts);
-        return "arrProducts";
+        yield CollectionShopingCart.updateOne({ user_id: user_id }, { $set: { products: products } });
+        const productsArr = yield CollectionShopingCart.findOne({}).then(a => a === null || a === void 0 ? void 0 : a.products);
+        return productsArr;
     }
     catch (err) {
-        console.error("Failed to retrieve documents:", err);
+        throw err;
     }
 });
-exports.isProductExists = isProductExists;
+exports.editShopingCart = editShopingCart;
+const getShopingCart = (user_id) => __awaiter(void 0, void 0, void 0, function* () {
+    try {
+        const CollectionShopingCart = myDB.collection("shopingCart");
+        const productsArr = yield CollectionShopingCart.findOne({ user_id: user_id });
+        return productsArr;
+    }
+    catch (err) {
+        throw err;
+    }
+});
+exports.getShopingCart = getShopingCart;
 const getProductFromDB = (productID) => __awaiter(void 0, void 0, void 0, function* () {
     const myCollection = myDB.collection("products");
     try {
