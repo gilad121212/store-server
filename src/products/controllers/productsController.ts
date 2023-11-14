@@ -51,4 +51,13 @@ import { getAllCategories, getAllProducts , getCategory, getProductById , getTop
     }
   };
 
-  
+// code for akiva only
+// export const getProductByCategory = async (req: Request, res: Response) => {
+//   const {category} = req.params;
+//   try {
+//     const products = await getByCategory(category);
+//     res.status(200).json({ data: products });
+//   } catch (error: any) {
+//     res.status(500).json({ error: error.message });
+//   }
+// }
