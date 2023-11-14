@@ -14,6 +14,10 @@ const apiServices_1 = require("../services/apiServices");
 const signUp = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     try {
         const user = req.body;
+        console.log(req.body);
+        if (user.email === undefined || user.first_name === undefined || user.last_name === undefined || user.password === undefined) {
+            return res.status(500).send("not format");
+        }
         const userToInsert = {
             email: user.email,
             first_name: user.first_name,
@@ -22,10 +26,10 @@ const signUp = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
         };
         const result = yield (0, apiServices_1.register)(userToInsert);
         const token = yield (0, apiServices_1.getToken)(result);
-        res.status(200).send(token);
+        return res.status(200).send(token);
     }
     catch (err) {
-        res.status(500).send(err.message);
+        return res.status(500).send(err.message);
     }
 });
 exports.signUp = signUp;
