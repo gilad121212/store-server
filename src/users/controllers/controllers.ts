@@ -11,13 +11,13 @@ export const signUp = async (req: Request, res: Response) => {
     try {
         const user = req.body as User;
         console.log(req.body);
-        if (user.email === undefined || user.first_name === undefined || user.last_name === undefined || user.password === undefined) {
+        if (user.email === undefined || user.firstName === undefined || user.lastName === undefined || user.password === undefined) {
             return res.status(500).send("not format");
         }
         const userToInsert = {
             email: user.email,
-            first_name: user.first_name,
-            last_name: user.last_name,
+            firstName: user.firstName,
+            lastName: user.lastName,
             password: user.password
         }
         const result = await register(userToInsert)
