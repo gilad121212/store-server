@@ -1,4 +1,4 @@
-import { getCollectionFromDB, getCategoryFromDB, getProductFromDB , getTopFiveFromDB } from "../dal/productsDal";
+import { getCollectionFromDB, getCategoryFromDB, getProductFromDB , getTopFiveFromDB, isProductExists } from "../dal/productsDal";
 
 
 export const getAllCategories = async () => {
@@ -21,6 +21,27 @@ export const getAllProducts = async () => {
   }
 };
 
+
+export const plusProduct = async (product:string, user_id:string) => {
+  try {
+    const ProductExists = await isProductExists(product, user_id);
+    // if (!products) throw new Error("no collection in the database");
+    return "products";
+  } catch (error) {
+    return Promise.reject(error);
+  }
+};
+
+
+export const minProduct = async () => {
+  try {
+    const products = await getCollectionFromDB("products");
+    if (!products) throw new Error("no collection in the database");
+    return products;
+  } catch (error) {
+    return Promise.reject(error);
+  }
+};
 export const getCategory = async (categoryID: string) => {
   try {
     const products = await getCategoryFromDB(categoryID);

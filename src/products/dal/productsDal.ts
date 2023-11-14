@@ -30,6 +30,21 @@ export const getCategoryFromDB = async (categoryID: string) => {
   }
 };
 
+export const isProductExists = async (product: string, user_id: string) => {
+  try {
+    const CollectionShopingCart = myDB.collection("shopingCart");
+    console.log();
+    
+    const cart = await CollectionShopingCart.findOne({ user_id: user_id})
+    console.log(cart);
+    const arrProducts = cart?.products.find((obj: { product_id: string; }) => obj.product_id === product)
+    console.log(arrProducts);
+    return "arrProducts"
+  } catch (err) {
+    console.error("Failed to retrieve documents:", err);
+  }
+};
+
 export const getProductFromDB = async (productID: string) => {
   const myCollection = myDB.collection("products");
   try {

@@ -1,5 +1,5 @@
 import { Request, Response } from 'express';
-import { getAllCategories, getAllProducts , getCategory, getProductById , getTopFive} from '../services/products';
+import { getAllCategories, getAllProducts , getCategory, getProductById , getTopFive, plusProduct, minProduct} from '../services/products';
 
 
   export const getAllCategoryController = async (req: Request, res: Response) => {
@@ -10,7 +10,17 @@ import { getAllCategories, getAllProducts , getCategory, getProductById , getTop
         res.status(500).json({ error: error.message });
       }
   };
-
+  export const AddProductToCart = async (req: Request, res: Response) => {
+    const {productId} = req.body
+    const {user_id} = req.body
+    const {type} = req.body    
+    try {
+        type? await plusProduct(productId, user_id): null;
+        return res.status(200).json("categories");
+      } catch (error: any) {
+        res.status(500).json({ error: error.message });
+      }
+  };
   export const getAllProductsController = async (req: Request, res: Response) => {
     try {
         const products = await getAllProducts();

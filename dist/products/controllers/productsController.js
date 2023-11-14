@@ -9,7 +9,7 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
     });
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.getTopFiveController = exports.getProductByIdController = exports.getCategoryByIdController = exports.getAllProductsController = exports.getAllCategoryController = void 0;
+exports.getTopFiveController = exports.getProductByIdController = exports.getCategoryByIdController = exports.getAllProductsController = exports.AddProductToCart = exports.getAllCategoryController = void 0;
 const products_1 = require("../services/products");
 const getAllCategoryController = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     try {
@@ -21,6 +21,19 @@ const getAllCategoryController = (req, res) => __awaiter(void 0, void 0, void 0,
     }
 });
 exports.getAllCategoryController = getAllCategoryController;
+const AddProductToCart = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    const { productId } = req.body;
+    const { user_id } = req.body;
+    const { type } = req.body;
+    try {
+        type ? yield (0, products_1.plusProduct)(productId, user_id) : null;
+        return res.status(200).json("categories");
+    }
+    catch (error) {
+        res.status(500).json({ error: error.message });
+    }
+});
+exports.AddProductToCart = AddProductToCart;
 const getAllProductsController = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     try {
         const products = yield (0, products_1.getAllProducts)();

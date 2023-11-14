@@ -9,6 +9,7 @@ const productsRouter = express_1.default.Router();
 productsRouter.get("/", productsController_1.getAllCategoryController);
 productsRouter.get("/all", productsController_1.getAllProductsController);
 productsRouter.get("/all/:id", productsController_1.getCategoryByIdController);
+productsRouter.post("/cart", productsController_1.AddProductToCart);
 productsRouter.get("/product/:id", productsController_1.getProductByIdController);
 productsRouter.get("/top5/:type", productsController_1.getTopFiveController);
 exports.default = productsRouter;
