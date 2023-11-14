@@ -1,5 +1,5 @@
 import { Request, Response } from 'express';
-import { getAllCategories, getAllProducts , getCategory, getProductById} from '../services/products';
+import { getAllCategories, getAllProducts , getCategory, getProductById , getTopFive} from '../services/products';
 
 
   export const getAllCategoryController = async (req: Request, res: Response) => {
@@ -41,3 +41,14 @@ import { getAllCategories, getAllProducts , getCategory, getProductById} from '.
     }
   };
 
+  export const getTopFiveController = async (req: Request, res: Response) => {
+    const type = req.params.type;
+    try {
+      const topElements = await getTopFive(type);
+      res.status(200).json({ data: topElements });
+    } catch (error: any) {
+      res.status(500).json({ error: error.message });
+    }
+  };
+
+  

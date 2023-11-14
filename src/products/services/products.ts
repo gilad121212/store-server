@@ -1,4 +1,4 @@
-import { getCollectionFromDB, getCategoryFromDB, getProductFromDB } from "../dal/productsDal";
+import { getCollectionFromDB, getCategoryFromDB, getProductFromDB , getTopFiveFromDB } from "../dal/productsDal";
 
 
 export const getAllCategories = async () => {
@@ -43,3 +43,12 @@ export const getAllCategories = async () => {
     }
   };
   
+
+export const getTopFive = async (type: string) => {
+  try {
+    const topElements = await getTopFiveFromDB(type);
+    return topElements;
+  } catch (error) {
+    return Promise.reject(error);
+  }
+};
