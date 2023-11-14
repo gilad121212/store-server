@@ -12,16 +12,7 @@ export const getCollectionFromDB = async (collection: string) => {
     console.error("Failed to retrieve documents:", err);
   }
 };
-export const productsByCAtegory = async () => {
-  const myCollection = myDB.collection("products");
-  try {
-    const product = await myCollection.find({ 'category.id': Number(categoryID) }).toArray();
-    return product;
-  } catch (err) {
-    console.error("Failed to retrieve documents:", err);
-    throw err
-  }
-}
+
 export const getByCategoryFromDB = async (categoryID: string) => {
   const myCollection = myDB.collection("products");
   try {

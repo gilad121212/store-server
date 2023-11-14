@@ -2,6 +2,7 @@ import {
   getCollectionFromDB,
   getByCategoryFromDB,
   getProductFromDB
+
 } from "../dal/productsDal";
 import productsRouter from "../routes/router";
 
@@ -46,6 +47,7 @@ export const getByCategory = async (category: string) => {
     return Promise.reject(error);
   }
 }
+
 export const getProductById = async (id: string) => {
   try {
     const product = await getProductFromDB(id);
