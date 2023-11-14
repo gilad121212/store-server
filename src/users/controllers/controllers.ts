@@ -10,6 +10,9 @@ import { Request, Response } from 'express';
 export const signUp = async (req: Request, res: Response) =>{
     try{
         const user = req.body as User;
+        const userToInsert = {
+            
+        }
         const result = await register(user)
         const token = await getToken(result)
         res.status(200).send(token)
