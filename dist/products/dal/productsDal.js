@@ -9,7 +9,7 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
     });
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.getProductFromDB = exports.getCategoryFromDB = exports.getCollectionFromDB = void 0;
+exports.getProductFromDB = exports.getByCategoryFromDB = exports.getCollectionFromDB = void 0;
 const mongoDB_1 = require("../../configuration/mongoDB");
 const myDB = mongoDB_1.client.db("store");
 const getCollectionFromDB = (collection) => __awaiter(void 0, void 0, void 0, function* () {
@@ -23,17 +23,17 @@ const getCollectionFromDB = (collection) => __awaiter(void 0, void 0, void 0, fu
     }
 });
 exports.getCollectionFromDB = getCollectionFromDB;
-const getCategoryFromDB = (categoryID) => __awaiter(void 0, void 0, void 0, function* () {
+const getByCategoryFromDB = (categoryID) => __awaiter(void 0, void 0, void 0, function* () {
     const myCollection = myDB.collection("products");
     try {
-        const documents = yield myCollection.find({ 'category.id': Number(categoryID) }).toArray();
+        const documents = yield myCollection.find({ 'category.name': categoryID }).toArray();
         return documents;
     }
     catch (err) {
         console.error("Failed to retrieve documents:", err);
     }
 });
-exports.getCategoryFromDB = getCategoryFromDB;
+exports.getByCategoryFromDB = getByCategoryFromDB;
 const getProductFromDB = (productID) => __awaiter(void 0, void 0, void 0, function* () {
     const myCollection = myDB.collection("products");
     try {
