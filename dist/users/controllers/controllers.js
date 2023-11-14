@@ -14,8 +14,13 @@ const apiServices_1 = require("../services/apiServices");
 const signUp = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     try {
         const user = req.body;
-        const userToInsert = {};
-        const result = yield (0, apiServices_1.register)(user);
+        const userToInsert = {
+            email: user.email,
+            first_name: user.first_name,
+            last_name: user.last_name,
+            password: user.password
+        };
+        const result = yield (0, apiServices_1.register)(userToInsert);
         const token = yield (0, apiServices_1.getToken)(result);
         res.status(200).send(token);
     }
