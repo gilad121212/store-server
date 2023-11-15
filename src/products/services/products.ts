@@ -1,5 +1,5 @@
-import { getCollectionFromDB, getCategoryFromDB, getProductFromDB , getTopFiveFromDB } from "../dal/productsDal";
-
+import { getCollectionFromDB, getCategoryFromDB, getProductFromDB , getTopFiveFromDB, editShopingCart as editShopingCart, getShopingCart } from "../dal/productsDal";
+import { Products } from "../dal/productsDal";
 
 export const getAllCategories = async () => {
   try {
@@ -20,6 +20,26 @@ export const getAllProducts = async () => {
     return Promise.reject(error);
   }
 };
+
+
+export const updateCart = async (product:Products, user_id:string) => {
+  try {
+    const result = await editShopingCart(product, user_id);
+    return result
+  } catch (error) {
+    return Promise.reject(error);
+  }
+};
+export const getProductsCart = async (user_id:string) => {
+  try {
+    const result = await getShopingCart(user_id);
+    return result
+  } catch (error) {
+    return Promise.reject(error);
+  }
+};
+
+
 
 export const getCategory = async (categoryID: string) => {
   try {

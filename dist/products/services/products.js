@@ -9,7 +9,7 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
     });
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.getTopFive = exports.getProductById = exports.getCategory = exports.getAllProducts = exports.getAllCategories = void 0;
+exports.getTopFive = exports.getProductById = exports.getCategory = exports.getProductsCart = exports.updateCart = exports.getAllProducts = exports.getAllCategories = void 0;
 const productsDal_1 = require("../dal/productsDal");
 const getAllCategories = () => __awaiter(void 0, void 0, void 0, function* () {
     try {
@@ -35,6 +35,26 @@ const getAllProducts = () => __awaiter(void 0, void 0, void 0, function* () {
     }
 });
 exports.getAllProducts = getAllProducts;
+const updateCart = (product, user_id) => __awaiter(void 0, void 0, void 0, function* () {
+    try {
+        const result = yield (0, productsDal_1.editShopingCart)(product, user_id);
+        return result;
+    }
+    catch (error) {
+        return Promise.reject(error);
+    }
+});
+exports.updateCart = updateCart;
+const getProductsCart = (user_id) => __awaiter(void 0, void 0, void 0, function* () {
+    try {
+        const result = yield (0, productsDal_1.getShopingCart)(user_id);
+        return result;
+    }
+    catch (error) {
+        return Promise.reject(error);
+    }
+});
+exports.getProductsCart = getProductsCart;
 const getCategory = (categoryID) => __awaiter(void 0, void 0, void 0, function* () {
     try {
         const products = yield (0, productsDal_1.getCategoryFromDB)(categoryID);
