@@ -1,6 +1,6 @@
 import { client } from "../../configuration/mongoDB";
 const myDB = client.db("store");
-export type Products = { product_id: number, quantity: number }[]
+export type Products = { id: number, quantity: number }[]
 export const getCollectionFromDB = async (collection: string) => {
   const myCollection = myDB.collection(collection);
   try {
@@ -28,11 +28,16 @@ export const getCategoryFromDB = async (categoryID: string) => {
   }
 };
 export const editShopingCart = async (products: Products, user_id: string) => {
+  const productToUpdate = products.map((productObj) => ({
+    id: productObj.id,
+    quantity: productObj.quantity
+  }));
+
   try {
     const CollectionShopingCart = myDB.collection("shopingCart");
     await CollectionShopingCart.updateOne(
       { user_id: user_id },
-      { $set: { products: products } }
+      { $set: { products: productToUpdate } }
     );
     const productsArr = await CollectionShopingCart.findOne({}).then(a => a?.products)
     return productsArr
@@ -46,11 +51,14 @@ export const getShopingCart = async (user_id: string) => {
     const CollectionShopingCart = myDB.collection("shopingCart");
     const productsArr = await CollectionShopingCart.findOne({ user_id: user_id })
     console.log(productsArr);
-    const productsIdList = productsArr?.products.map((id: { product_id: string }) => id.product_id)
-    const quantityList = productsArr?.products.map((id: { quantity : number }) => id.quantity)
+    const productsIdList = productsArr?.products.map((product: { id: string }) => product.id)
+    const quantityList = productsArr?.products.map((id: { quantity: number }) => id.quantity)
+    console.log(productsIdList, quantityList);
+    
     const products = await myCollection.find({ id: { $in: productsIdList } }).toArray()
-
-    for(let i = 0; i < products.length ; i ++) {
+    console.log(products);
+    
+    for (let i = 0; i < products.length; i++) {
       products[i].quantity = quantityList[i]
     }
     console.log(products);
