@@ -40,9 +40,13 @@ const getCategoryFromDB = (categoryID) => __awaiter(void 0, void 0, void 0, func
 });
 exports.getCategoryFromDB = getCategoryFromDB;
 const editShopingCart = (products, user_id) => __awaiter(void 0, void 0, void 0, function* () {
+    const productToUpdate = products.map((productObj) => ({
+        id: productObj.id,
+        quantity: productObj.quantity
+    }));
     try {
         const CollectionShopingCart = myDB.collection("shopingCart");
-        yield CollectionShopingCart.updateOne({ user_id: user_id }, { $set: { products: products } });
+        yield CollectionShopingCart.updateOne({ user_id: user_id }, { $set: { products: productToUpdate } });
         const productsArr = yield CollectionShopingCart.findOne({}).then(a => a === null || a === void 0 ? void 0 : a.products);
         return productsArr;
     }
@@ -57,9 +61,11 @@ const getShopingCart = (user_id) => __awaiter(void 0, void 0, void 0, function* 
         const CollectionShopingCart = myDB.collection("shopingCart");
         const productsArr = yield CollectionShopingCart.findOne({ user_id: user_id });
         console.log(productsArr);
-        const productsIdList = productsArr === null || productsArr === void 0 ? void 0 : productsArr.products.map((id) => id.product_id);
+        const productsIdList = productsArr === null || productsArr === void 0 ? void 0 : productsArr.products.map((product) => product.id);
         const quantityList = productsArr === null || productsArr === void 0 ? void 0 : productsArr.products.map((id) => id.quantity);
+        console.log(productsIdList, quantityList);
         const products = yield myCollection.find({ id: { $in: productsIdList } }).toArray();
+        console.log(products);
         for (let i = 0; i < products.length; i++) {
             products[i].quantity = quantityList[i];
         }

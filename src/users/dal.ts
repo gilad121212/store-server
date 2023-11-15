@@ -37,7 +37,17 @@ export const addUser = async (user: User) => {
             ]
         }
         await collectionCarts.insertOne(Cart)
-        return add;
+        return userFromDB._id;
+    } catch (err) {
+        console.error("Failed to retrieve documents:", err);
+        throw err
+    }
+}
+
+export const getId = async (user: User) => {
+    try {
+        const userFromDB = await collectionUsers.findOne({ "email": user.email })
+        return userFromDB?._id;
     } catch (err) {
         console.error("Failed to retrieve documents:", err);
         throw err

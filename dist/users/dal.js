@@ -9,7 +9,7 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
     });
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.addUser = exports.getUserByEmail = void 0;
+exports.getId = exports.addUser = exports.getUserByEmail = void 0;
 const mongoDB_1 = require("../configuration/mongoDB");
 const myDB = mongoDB_1.client.db("store");
 const collectionUsers = myDB.collection("users");
@@ -41,7 +41,7 @@ const addUser = (user) => __awaiter(void 0, void 0, void 0, function* () {
             products: []
         };
         yield collectionCarts.insertOne(Cart);
-        return add;
+        return userFromDB._id;
     }
     catch (err) {
         console.error("Failed to retrieve documents:", err);
@@ -49,3 +49,14 @@ const addUser = (user) => __awaiter(void 0, void 0, void 0, function* () {
     }
 });
 exports.addUser = addUser;
+const getId = (user) => __awaiter(void 0, void 0, void 0, function* () {
+    try {
+        const userFromDB = yield collectionUsers.findOne({ "email": user.email });
+        return userFromDB === null || userFromDB === void 0 ? void 0 : userFromDB._id;
+    }
+    catch (err) {
+        console.error("Failed to retrieve documents:", err);
+        throw err;
+    }
+});
+exports.getId = getId;
