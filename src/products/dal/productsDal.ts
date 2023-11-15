@@ -1,9 +1,6 @@
 import { client } from "../../configuration/mongoDB";
-
 const myDB = client.db("store");
-
 export type Products = { product_id: number, quantity: number }[]
-
 export const getCollectionFromDB = async (collection: string) => {
   const myCollection = myDB.collection(collection);
   try {
@@ -13,7 +10,6 @@ export const getCollectionFromDB = async (collection: string) => {
     console.error("Failed to retrieve documents:", err);
   }
 };
-
 export const getCategoryFromDB = async (categoryID: string) => {
   const myCollection = myDB.collection("products");
   const myCategoriesCollection = myDB.collection("categories");
@@ -31,7 +27,6 @@ export const getCategoryFromDB = async (categoryID: string) => {
     console.error("Failed to retrieve documents:", err);
   }
 };
-
 export const editShopingCart = async (products: Products, user_id: string) => {
   try {
     const CollectionShopingCart = myDB.collection("shopingCart");
@@ -45,21 +40,25 @@ export const editShopingCart = async (products: Products, user_id: string) => {
     throw err
   }
 };
-
 export const getShopingCart = async (user_id: string) => {
   const myCollection = myDB.collection("products");
   try {
     const CollectionShopingCart = myDB.collection("shopingCart");
     const productsArr = await CollectionShopingCart.findOne({ user_id: user_id })
+    console.log(productsArr);
     const productsIdList = productsArr?.products.map((id: { product_id: string }) => id.product_id)
+    const quantityList = productsArr?.products.map((id: { quantity : number }) => id.quantity)
     const products = await myCollection.find({ id: { $in: productsIdList } }).toArray()
+
+    for(let i = 0; i < products.length ; i ++) {
+      products[i].quantity = quantityList[i]
+    }
     console.log(products);
     return products
   } catch (err) {
     throw err
   }
 };
-
 export const getProductFromDB = async (productID: string) => {
   const myCollection = myDB.collection("products");
   try {
@@ -74,7 +73,6 @@ export const getProductFromDB = async (productID: string) => {
     console.error("Failed to retrieve documents:", err);
   }
 };
-
 export const getTopFiveFromDB = async (type: string) => {
   const myCollection = myDB.collection(type);
   try {
