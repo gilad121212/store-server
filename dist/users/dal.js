@@ -14,7 +14,6 @@ const mongoDB_1 = require("../configuration/mongoDB");
 const myDB = mongoDB_1.client.db("store");
 const collectionUsers = myDB.collection("users");
 const collectionCarts = myDB.collection("shopingCart");
-const Cart = { "user_id": { "$oid": "6551ecae1026f74928c28106" }, "products": [{ "product_id": "65510639bf9c16a9b1242704", "quantity": { "$numberInt": "1" } }] };
 const getUserByEmail = (email) => __awaiter(void 0, void 0, void 0, function* () {
     try {
         const document = yield collectionUsers.findOne({ "email": email });
@@ -37,7 +36,7 @@ const addUser = (user) => __awaiter(void 0, void 0, void 0, function* () {
             throw new Error("Failed to create shopping cart The user has not been updated in the system");
         }
         const Cart = {
-            user_id: userFromDB._id,
+            user_id: userFromDB._id.toString(),
             products: []
         };
         yield collectionCarts.insertOne(Cart);

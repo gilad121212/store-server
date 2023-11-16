@@ -20,7 +20,7 @@ const app = (0, express_1.default)();
 app.use(cors_1.corsOrigin);
 app.use(express_1.default.json());
 app.use(router_1.default);
-app.listen(3000, () => __awaiter(void 0, void 0, void 0, function* () {
+app.listen(3009, () => __awaiter(void 0, void 0, void 0, function* () {
     yield mongoDB_1.client.connect();
     console.log(`Server is up and running`);
 }));
