@@ -5,7 +5,7 @@ COPY package*.json tsconfig.json ./
 RUN npm install
 
 COPY ./src ./src
-RUN npx tsc
+RUN tsc
 
 ENV PORT=8181
 EXPOSE 8181
