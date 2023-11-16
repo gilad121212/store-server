@@ -50,18 +50,12 @@ export const getShopingCart = async (user_id: string) => {
   try {
     const CollectionShopingCart = myDB.collection("shopingCart");
     const productsArr = await CollectionShopingCart.findOne({ user_id: user_id })
-    console.log(productsArr);
     const productsIdList = productsArr?.products.map((product: { id: string }) => product.id)
-    const quantityList = productsArr?.products.map((id: { quantity: number }) => id.quantity)
-    console.log(productsIdList, quantityList);
-    
+    const quantityList = productsArr?.products.map((id: { quantity: number }) => id.quantity)    
     const products = await myCollection.find({ id: { $in: productsIdList } }).toArray()
-    console.log(products);
-    
     for (let i = 0; i < products.length; i++) {
       products[i].quantity = quantityList[i]
     }
-    console.log(products);
     return products
   } catch (err) {
     throw err

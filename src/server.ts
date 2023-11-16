@@ -10,7 +10,7 @@ app.use(cors);
 app.use(express.json());
 app.use(router);
 
-app.listen(3000, async () => {
+app.listen(3009, async () => {
   await client.connect();
   console.log(`Server is up and running`);
 });
