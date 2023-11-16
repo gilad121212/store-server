@@ -16,8 +16,11 @@ const signUp = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     try {
         const user = req.body;
         console.log(req.body);
-        if (user.email === undefined || user.firstName === undefined || user.lastName === undefined || user.password === undefined) {
+        if (!user.email || !user.firstName || !user.lastName || !user.password) {
             return res.status(500).send("not format");
+        }
+        if (user.password.length < 6) {
+            return res.status(500).send("password should be ...");
         }
         const userToInsert = {
             email: user.email,
