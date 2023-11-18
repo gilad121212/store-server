@@ -1,8 +1,9 @@
 import { first, last } from "cheerio/lib/api/traversing";
 import { User } from "../../configuration/Userinterface";
 import { register, getToken } from "../services/apiServices";
-import { Request, Response } from 'express';
+import { NextFunction, Request, Response } from 'express';
 import { getId } from "../dal";
+import jwt from'jsonwebtoken';
 
 
 
@@ -53,3 +54,20 @@ export const logIn = async (req: Request, res: Response) => {
         res.status(500).send(err.message)
     }
 }
+
+
+
+module.exports = (req: Request, res: Response, next:NextFunction) => {
+  const token = req.header('Authorization');
+  if(!token) 
+    return res.status(401).send('Access denied. No token provided.');
+  try {
+    const decoded = jwt.verify(token, 'secretKey');
+    req.body.user = decoded; 
+    next();
+  } catch (ex) {
+    res.status(400).send('Invalid token.');
+
+  }
+
+};
