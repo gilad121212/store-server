@@ -12,10 +12,10 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.getToken = exports.register = void 0;
+exports.getToken = exports.register = exports.secretKey = void 0;
 const dal_1 = require("../dal");
 const jsonwebtoken_1 = __importDefault(require("jsonwebtoken"));
-const secretKey = 'akiva';
+exports.secretKey = 'yS2$dKsfjdwie8$3jd88dhH6Ge6';
 const register = (user) => __awaiter(void 0, void 0, void 0, function* () {
     try {
         const users = yield (0, dal_1.getUserByEmail)(user.email);
@@ -41,7 +41,7 @@ const getToken = (user) => __awaiter(void 0, void 0, void 0, function* () {
         if (usersFromDB.password !== user.password) {
             return Promise.reject(new Error("The password is incorrect!"));
         }
-        const token = jsonwebtoken_1.default.sign({ user }, secretKey, { expiresIn: '30d' });
+        const token = jsonwebtoken_1.default.sign({ user }, exports.secretKey, { expiresIn: '30d' });
         return token;
     }
     catch (error) {

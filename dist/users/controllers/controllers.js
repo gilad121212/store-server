@@ -29,10 +29,9 @@ const signUp = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
             password: user.password
         };
         const id = yield (0, apiServices_1.register)(userToInsert);
-        const token = yield (0, apiServices_1.getToken)({ email: userToInsert.email, password: userToInsert.password });
+        const token = yield (0, apiServices_1.getToken)({ email: userToInsert.email, password: userToInsert.password, id: id.toString() });
         const result = {
             token: token,
-            id: id
         };
         return res.status(200).send(result);
     }

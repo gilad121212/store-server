@@ -1,7 +1,7 @@
 import { first, last } from "cheerio/lib/api/traversing";
 import { User } from "../../configuration/Userinterface";
 import { register, getToken } from "../services/apiServices";
-import { Request, Response } from 'express';
+import { NextFunction, Request, Response } from 'express';
 import { getId } from "../dal";
 
 
@@ -25,10 +25,9 @@ export const signUp = async (req: Request, res: Response) => {
             password: user.password
         }
         const id = await register(userToInsert)
-        const token = await getToken({ email: userToInsert.email, password: userToInsert.password })
+        const token = await getToken({ email: userToInsert.email, password: userToInsert.password, id: id.toString() })
         const result = {
             token: token,
-            id: id
         }
         return res.status(200).send(result);
     } catch (err: any) {
@@ -53,3 +52,6 @@ export const logIn = async (req: Request, res: Response) => {
         res.status(500).send(err.message)
     }
 }
+
+
+

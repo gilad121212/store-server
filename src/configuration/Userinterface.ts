@@ -9,4 +9,5 @@ export interface User{
 export interface UserFromClient{
     email: string,
     password: string
+    id?:string
 }

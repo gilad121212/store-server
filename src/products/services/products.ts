@@ -32,6 +32,7 @@ export const updateCart = async (product:Products, user_id:string) => {
 };
 export const getProductsCart = async (user_id:string) => {
   try {
+    
     const result = await getShopingCart(user_id);
     return result
   } catch (error) {
@@ -52,15 +53,6 @@ export const getCategory = async (categoryID: string) => {
     return Promise.reject(error);
   }
 };
-// export const getByCategory = async (category: string) => {
-//   try {
-//     const product = await getByCategoryFromDB(category);
-//     if (!product) throw new Error("no such product in the database");
-//     return product;
-//   } catch (error) {
-//     return Promise.reject(error);
-//   }
-// }
 
 
   export const getProductById = async (id: string) => {

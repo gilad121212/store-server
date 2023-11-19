@@ -1,6 +1,7 @@
-import { Request, Response } from 'express';
+import { NextFunction, Request, Response } from 'express';
 import { getAllCategories, getAllProducts, getCategory, getProductById, updateCart, getTopFive, getProductsCart } from '../services/products';
-
+import jwt from'jsonwebtoken';
+import { secretKey } from '../../users/services/apiServices';
 
 export const getAllCategoryController = async (req: Request, res: Response) => {
   try {
@@ -12,13 +13,11 @@ export const getAllCategoryController = async (req: Request, res: Response) => {
 };
 
 
-
-
-export const editCart = async (req: Request, res: Response) => {
-  const { products } = req.body
-  const { user_id } = req.body
+export const editCart = async (req: Request, res: Response) => {  
+  const { products } = req.body  
+  const { user } = req.body
   try {
-    const result = await updateCart(products, user_id);
+    const result = await updateCart(products, user.user.id);
     return res.status(200).json(result);
   } catch (error: any) {
     res.status(500).json({ error: error.message });
@@ -26,11 +25,10 @@ export const editCart = async (req: Request, res: Response) => {
 };
 
 
-
 export const getCart = async (req: Request, res: Response) => {
-  const { user_id } = req.body
+  const { user } = req.body  
   try {
-    const products = await getProductsCart(user_id);
+    const products = await getProductsCart(user.user.id);
     return res.status(200).json(products);
   } catch (error: any) {
     res.status(500).json({ error: error.message });
@@ -79,13 +77,15 @@ export const getTopFiveController = async (req: Request, res: Response) => {
   }
 };
 
-// code for akiva only
-// export const getProductByCategory = async (req: Request, res: Response) => {
-//   const {category} = req.params;
-//   try {
-//     const products = await getByCategory(category);
-//     res.status(200).json({ data: products });
-//   } catch (error: any) {
-//     res.status(500).json({ error: error.message });
-//   }
-// }
+export const auth = (req: Request, res: Response, next:NextFunction) => {
+  const token = req.header('Authorization');
+  if(!token) 
+    return res.status(401).send('Access denied. No token provided.');
+  try {
+    const decoded = jwt.verify(token, secretKey);
+    req.body.user = decoded;     
+    next();
+  } catch (ex) {
+    res.status(400).send(`Invalid token: ${ex}` );
+  }
+};
