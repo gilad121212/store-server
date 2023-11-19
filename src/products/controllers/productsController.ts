@@ -28,7 +28,9 @@ export const editCart = async (req: Request, res: Response) => {
 export const getCart = async (req: Request, res: Response) => {
   const { user } = req.body  
   try {
-    const products = await getProductsCart(user.user.id);
+    console.log(user);
+    
+    const products = await getProductsCart(user.user.id);    
     return res.status(200).json(products);
   } catch (error: any) {
     res.status(500).json({ error: error.message });

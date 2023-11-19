@@ -41,6 +41,7 @@ exports.editCart = editCart;
 const getCart = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     const { user } = req.body;
     try {
+        console.log(user);
         const products = yield (0, products_1.getProductsCart)(user.user.id);
         return res.status(200).json(products);
     }
