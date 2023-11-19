@@ -43,8 +43,8 @@ exports.signUp = signUp;
 const logIn = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     try {
         const user = req.body;
-        const token = yield (0, apiServices_1.getToken)(user);
         const id = yield (0, dal_1.getId)(user);
+        const token = yield (0, apiServices_1.getToken)({ email: user.email, password: user.password, id: id === null || id === void 0 ? void 0 : id.toString() });
         const result = {
             token: token,
             id: id

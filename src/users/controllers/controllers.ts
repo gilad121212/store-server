@@ -40,8 +40,8 @@ export const signUp = async (req: Request, res: Response) => {
 export const logIn = async (req: Request, res: Response) => {
     try {
         const user = req.body as User;
-        const token = await getToken(user)
         const id = await getId(user)
+        const token = await getToken({ email: user.email, password: user.password, id: id?.toString() })
         const result = {
             token: token,
             id: id

@@ -59,7 +59,9 @@ const getShopingCart = (user_id) => __awaiter(void 0, void 0, void 0, function* 
     const myCollection = myDB.collection("products");
     try {
         const CollectionShopingCart = myDB.collection("shopingCart");
+        console.log(user_id);
         const productsArr = yield CollectionShopingCart.findOne({ user_id: user_id });
+        console.log(productsArr);
         const productsIdList = productsArr === null || productsArr === void 0 ? void 0 : productsArr.products.map((product) => product.id);
         const quantityList = productsArr === null || productsArr === void 0 ? void 0 : productsArr.products.map((id) => id.quantity);
         const products = yield myCollection.find({ id: { $in: productsIdList } }).toArray();
