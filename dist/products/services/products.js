@@ -68,15 +68,6 @@ const getCategory = (categoryID) => __awaiter(void 0, void 0, void 0, function* 
     }
 });
 exports.getCategory = getCategory;
-// export const getByCategory = async (category: string) => {
-//   try {
-//     const product = await getByCategoryFromDB(category);
-//     if (!product) throw new Error("no such product in the database");
-//     return product;
-//   } catch (error) {
-//     return Promise.reject(error);
-//   }
-// }
 const getProductById = (id) => __awaiter(void 0, void 0, void 0, function* () {
     try {
         const product = yield (0, productsDal_1.getProductFromDB)(id);

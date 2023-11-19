@@ -2,7 +2,7 @@ import { getUserByEmail, addUser } from "../dal";
 import { User, UserFromClient } from "../../configuration/Userinterface";
 import jwt, { JwtPayload } from "jsonwebtoken";
 
-const secretKey = 'akiva';
+export const secretKey = 'yS2$dKsfjdwie8$3jd88dhH6Ge6';
 
 
 export const register = async (user: User) => {

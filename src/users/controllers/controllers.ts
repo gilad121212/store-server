@@ -3,7 +3,6 @@ import { User } from "../../configuration/Userinterface";
 import { register, getToken } from "../services/apiServices";
 import { NextFunction, Request, Response } from 'express';
 import { getId } from "../dal";
-import jwt from'jsonwebtoken';
 
 
 
@@ -26,10 +25,9 @@ export const signUp = async (req: Request, res: Response) => {
             password: user.password
         }
         const id = await register(userToInsert)
-        const token = await getToken({ email: userToInsert.email, password: userToInsert.password })
+        const token = await getToken({ email: userToInsert.email, password: userToInsert.password, id: id.toString() })
         const result = {
             token: token,
-            id: id
         }
         return res.status(200).send(result);
     } catch (err: any) {
@@ -57,17 +55,3 @@ export const logIn = async (req: Request, res: Response) => {
 
 
 
-module.exports = (req: Request, res: Response, next:NextFunction) => {
-  const token = req.header('Authorization');
-  if(!token) 
-    return res.status(401).send('Access denied. No token provided.');
-  try {
-    const decoded = jwt.verify(token, 'secretKey');
-    req.body.user = decoded; 
-    next();
-  } catch (ex) {
-    res.status(400).send('Invalid token.');
-
-  }
-
-};

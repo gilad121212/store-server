@@ -29,10 +29,9 @@ const signUp = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
             password: user.password
         };
         const id = yield (0, apiServices_1.register)(userToInsert);
-        const token = yield (0, apiServices_1.getToken)({ email: userToInsert.email, password: userToInsert.password });
+        const token = yield (0, apiServices_1.getToken)({ email: userToInsert.email, password: userToInsert.password, id: id.toString() });
         const result = {
             token: token,
-            id: id
         };
         return res.status(200).send(result);
     }
@@ -57,17 +56,3 @@ const logIn = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     }
 });
 exports.logIn = logIn;
-const jwt = require('jsonwebtoken');
-module.exports = (req, res, next) => {
-    const token = req.header('Authorization');
-    if (!token)
-        return res.status(401).send('Access denied. No token provided.');
-    try {
-        const decoded = jwt.verify(token, 'secretKey');
-        req.body.user = decoded;
-        next();
-    }
-    catch (ex) {
-        res.status(400).send('Invalid token.');
-    }
-};

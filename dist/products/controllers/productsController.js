@@ -8,9 +8,14 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
         step((generator = generator.apply(thisArg, _arguments || [])).next());
     });
 };
+var __importDefault = (this && this.__importDefault) || function (mod) {
+    return (mod && mod.__esModule) ? mod : { "default": mod };
+};
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.getTopFiveController = exports.getProductByIdController = exports.getCategoryByIdController = exports.getAllProductsController = exports.getCart = exports.editCart = exports.getAllCategoryController = void 0;
+exports.auth = exports.getTopFiveController = exports.getProductByIdController = exports.getCategoryByIdController = exports.getAllProductsController = exports.getCart = exports.editCart = exports.getAllCategoryController = void 0;
 const products_1 = require("../services/products");
+const jsonwebtoken_1 = __importDefault(require("jsonwebtoken"));
+const apiServices_1 = require("../../users/services/apiServices");
 const getAllCategoryController = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     try {
         const categories = yield (0, products_1.getAllCategories)();
@@ -23,9 +28,9 @@ const getAllCategoryController = (req, res) => __awaiter(void 0, void 0, void 0,
 exports.getAllCategoryController = getAllCategoryController;
 const editCart = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     const { products } = req.body;
-    const { user_id } = req.body;
+    const { user } = req.body;
     try {
-        const result = yield (0, products_1.updateCart)(products, user_id);
+        const result = yield (0, products_1.updateCart)(products, user.user.id);
         return res.status(200).json(result);
     }
     catch (error) {
@@ -34,9 +39,9 @@ const editCart = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
 });
 exports.editCart = editCart;
 const getCart = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
-    const { user_id } = req.body;
+    const { user } = req.body;
     try {
-        const products = yield (0, products_1.getProductsCart)(user_id);
+        const products = yield (0, products_1.getProductsCart)(user.user.id);
         return res.status(200).json(products);
     }
     catch (error) {
@@ -87,13 +92,17 @@ const getTopFiveController = (req, res) => __awaiter(void 0, void 0, void 0, fun
     }
 });
 exports.getTopFiveController = getTopFiveController;
-// code for akiva only
-// export const getProductByCategory = async (req: Request, res: Response) => {
-//   const {category} = req.params;
-//   try {
-//     const products = await getByCategory(category);
-//     res.status(200).json({ data: products });
-//   } catch (error: any) {
-//     res.status(500).json({ error: error.message });
-//   }
-// }
+const auth = (req, res, next) => {
+    const token = req.header('Authorization');
+    if (!token)
+        return res.status(401).send('Access denied. No token provided.');
+    try {
+        const decoded = jsonwebtoken_1.default.verify(token, apiServices_1.secretKey);
+        req.body.user = decoded;
+        next();
+    }
+    catch (ex) {
+        res.status(400).send(`Invalid token: ${ex}`);
+    }
+};
+exports.auth = auth;
